@@ -45,7 +45,8 @@ app.post("/api/v2", urlencodedParser, (req, res) => {
       from: process.env.GMAIL_USERNAME,
       to: process.env.TO_EMAIL,
       subject: 'POST - Node.js Test Suit',
-      text: JSON.stringify(req.body)
+      text: JSON.stringify(req.body),
+      html: '<pre>' + JSON.stringify(req.body, undefined, 2) + '</pre>'
     };
 
     transporter.sendMail(mailOptions, function(error, info){
