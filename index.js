@@ -44,7 +44,34 @@ app.post("/api/v2", urlencodedParser, (req, res) => {
     var mailOptions = {
       from: process.env.GMAIL_USERNAME,
       to: process.env.TO_EMAIL,
-      subject: 'Node.js Test Suit',
+      subject: 'POST - Node.js Test Suit',
+      text: JSON.stringify(req.body)
+    };
+
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
+    });
+
+    res.send( JSON.stringify(req.body))
+});
+
+app.get("/api/v2", urlencodedParser, (req, res) => {
+    var transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.GMAIL_USERNAME,
+        pass: process.env.GMAIL_PASSWORD
+      }
+    });
+
+    var mailOptions = {
+      from: process.env.GMAIL_USERNAME,
+      to: process.env.TO_EMAIL,
+      subject: 'GET - Node.js Test Suit',
       text: JSON.stringify(req.body)
     };
 
