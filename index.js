@@ -30,6 +30,10 @@ app.post("/api/v1", urlencodedParser, (req, res) => {
     res.send( remote_welcome + ' fname: ' + req.body.fname + ' | fdata: ' + req.body.fdata)
 });
 
+app.post("/api/v2", urlencodedParser, (req, res) => {
+    res.send( remote_welcome + ' fname: ' + req.body.fname + ' | fdata: ' + req.body.fdata)
+});
+
 app.patch("/api/v1", (req, res) => {
   res.json('Hi, there');
 });
