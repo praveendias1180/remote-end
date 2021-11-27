@@ -31,7 +31,7 @@ app.post("/api/v1", urlencodedParser, (req, res) => {
 });
 
 app.post("/api/v2", urlencodedParser, (req, res) => {
-    res.send( remote_welcome + ' fname: ' + req.body.fname + ' | fdata: ' + req.body.fdata)
+    res.send( remote_welcome + 'v2 fname: ' + req.body.fname + ' | fdata: ' + req.body.fdata)
 });
 
 app.patch("/api/v1", (req, res) => {
