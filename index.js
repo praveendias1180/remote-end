@@ -1,8 +1,10 @@
+require('dotenv').config()
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const PORT = process.env.PORT || 9000
+const PORT = process.env.PORT || process.env.C_PORT
+var nodemailer = require('nodemailer');
 
 app.use(cors());
 
@@ -31,7 +33,30 @@ app.post("/api/v1", urlencodedParser, (req, res) => {
 });
 
 app.post("/api/v2", urlencodedParser, (req, res) => {
-    res.send( remote_welcome + 'v2 fname: ' + req.body.fname + ' | fdata: ' + req.body.fdata)
+    var transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.GMAIL_USERNAME,
+        pass: process.env.GMAIL_PASSWORD
+      }
+    });
+
+    var mailOptions = {
+      from: process.env.GMAIL_USERNAME,
+      to: process.env.TO_EMAIL,
+      subject: 'Node.js Test Suit',
+      text: JSON.stringify(req.body)
+    };
+
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
+    });
+
+    res.send( JSON.stringify(req.body))
 });
 
 app.patch("/api/v1", (req, res) => {
